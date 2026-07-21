@@ -154,7 +154,7 @@ const askAI = async (dashboard, question) => {
         // Generate AI Response
         const response = await ai.models.generateContent({
 
-            model: "gemini-2.5-flash",
+            model: "gemini-2.0-flash",
 
             contents: prompt
 
