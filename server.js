@@ -15,6 +15,10 @@ connectDB()
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the Vibe Backend API");
+})
+
 app.use("/api/import", importRoutes);
 app.use("/api/dashboard", dashboardRoutes);         
 app.use("/api/ai", Airouter);
