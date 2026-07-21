@@ -6,10 +6,14 @@ const { GoogleGenAI } = require("@google/genai");
  * ============================================================
  *
  * Create Gemini Client using environment variables.
+ * Supports both GEMINI_API_KEY and GEMINI_API_KEYa (Render-style)
+ * so deployment environments can work without code changes.
  */
-const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-});
+const geminiApiKey = process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEYa;
+
+const ai = geminiApiKey ? new GoogleGenAI({
+    apiKey: geminiApiKey,
+}) : null;
 
 /**
  * ============================================================
@@ -136,6 +140,10 @@ ${question}
 const askAI = async (dashboard, question) => {
 
     try {
+
+        if (!geminiApiKey || !ai) {
+            return "Gemini API key is not configured. Please set GEMINI_API_KEY or GEMINI_API_KEYa.";
+        }
 
         // Build Prompt
         const prompt = buildPrompt(
